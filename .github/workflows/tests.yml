@@ -34,8 +34,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-   
 
-    - name: Run tests
+    - name: Run tests with coverage
       run: |
-        pytest
+        coverage run -m pytest
+        coverage report
+        coverage html -d coverage_html
+
+    - name: Upload coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-results
+        path: coverage_html

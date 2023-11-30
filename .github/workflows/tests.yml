@@ -46,3 +46,13 @@ jobs:
       with:
         name: coverage-results
         path: coverage_html
+
+    - name: Check coverage
+      run: |
+        COVERAGE_THRESHOLD=80
+        COVERAGE=$(coverage report -m | grep TOTAL | awk '{print $NF}' | tr -d '%')
+        if [ "$COVERAGE" -lt "$COVERAGE_THRESHOLD" ]; then
+          echo "Error: Coverage is below $COVERAGE_THRESHOLD% ($COVERAGE%)"
+          exit 1
+        fi
+

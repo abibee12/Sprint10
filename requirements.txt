@@ -3,4 +3,5 @@ SQLAlchemy
 psycopg2-binary
 Flask-SQLAlchemy
 pytest
+flask-migrate==3.1.0
 

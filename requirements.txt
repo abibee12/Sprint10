@@ -5,4 +5,4 @@ Flask-SQLAlchemy
 pytest
 flask-migrate==3.1.0
 coverage
-
+flake8

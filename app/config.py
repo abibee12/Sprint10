@@ -6,8 +6,11 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "your_secret_key")
 
     # Database configuration
-    #SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:martinez@localhost:5432/Datos_App"
+
+    SQLALCHEMY_DATABASE_URI = (
+        "postgresql://postgres:martinez@"
+        "localhost:5432/Datos_App"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Add other configuration variables as needed
@@ -16,10 +19,16 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
 
+
 class TestingConfig(Config):
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:martinez@localhost:5432/Datos_App"
+    SQLALCHEMY_DATABASE_URI = (
+        "postgresql://postgres:martinez@"
+        "localhost:5432/Datos_App"
+    )
+
+
 class ProductionConfig(Config):
     DEBUG = False
     # Add other production configurations here

@@ -1,13 +1,14 @@
 # tests/test_routes.py
-from flask import Flask
-from flask.testing import FlaskClient
-from flask_sqlalchemy import SQLAlchemy
+
 import unittest
 from app import create_app, db
 from app.models import Data
 
+
 class MyTestCase(unittest.TestCase):
+
     def setUp(self):
+
         self.app = create_app('testing')
         self.client = self.app.test_client()
         with self.app.app_context():
@@ -71,6 +72,7 @@ class MyTestCase(unittest.TestCase):
         with self.app.app_context():
             # Expecting the data to be deleted
             self.assertEqual(Data.query.count(), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

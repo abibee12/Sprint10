@@ -58,6 +58,8 @@ pipeline {
                     bat 'docker build -t appflask .'
 
                     echo "imagen creada exitosamente"
+
+                    echo "prueba ejecucion automatica tras nueva actualizacion"
                 }
             }
         }

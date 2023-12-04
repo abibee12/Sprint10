@@ -59,7 +59,7 @@ pipeline {
 
                     echo "imagen creada exitosamente"
 
-                    echo "prueba ejecucion automatica tras nueva actualizacion"
+                    echo "segunda prueba ejecucion automatica tras nueva actualizacion"
                 }
             }
         }

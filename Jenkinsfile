@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Clonado de código fuente') {
+        stage('Clonado de codigo fuente') {
             steps {
                 git branch: 'main', credentialsId: 'gitCredentials', url: 'https://github.com/abibee12/Sprint10.git'
                 echo 'se ha clonado el repositorio '
             }
         }
 
-        stage('Ejecución de los test') {
+        stage('Ejecucion de los test') {
             steps {
                 script {
                     // Configuramos el entorno virtual
@@ -51,7 +51,7 @@ pipeline {
             }
         }
 
-        stage('Creación de Imagen Docker') {
+        stage('Creacion de Imagen Docker') {
             steps {
                 script {
                     // Construye la imagen Docker

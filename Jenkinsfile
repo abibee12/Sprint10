@@ -65,16 +65,13 @@ pipeline {
         }
 
 stage('Subida a Registry') {
-    environment {
-        DOCKERHUB_USERNAME = credentials('dockeruser')
-        DOCKERHUB_PASSWORD = credentials('dockerpass')
-    }
+
 
     steps {
         script {
             // Autenticación con Docker Hub
-            withCredentials([usernamePassword(credentialsId: 'dockerup', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                bat "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+            withCredentials([usernamePassword(credentialsId: 'dockerup', passwordVariable: 'dockerpass', usernameVariable: 'dockeruser')]) {
+               bat "docker login -u ${dockeruser} -p ${dockerpass}"
 
                 // Sube la imagen al registry
                 bat 'docker push abigailmtz8/appflask:latest'

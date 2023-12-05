@@ -18,28 +18,32 @@ pipeline {
             }
         }
 
-        stage('Ejecucion de los test') {
-            steps {
-                script {
-                    // Configuramos el entorno virtual
-                    bat 'python -m venv venv'
+     stage('Ejecucion de los test') {
+    steps {
+        script {
+            // Configuramos el entorno virtual
+            bat 'python -m venv venv'
 
-                    // Activamos el entorno virtual (Windows)
-                    bat 'venv\\Scripts\\activate.bat'
+            // Activamos el entorno virtual (Windows)
+            bat 'venv\\Scripts\\activate.bat'
 
-                    // Instalamos las dependencias
-                    bat 'pip install -r requirements.txt'
+            // Instalamos las dependencias
+            bat 'pip install -r requirements.txt'
 
-                    // Ejecutamos los tests
-                    bat 'pytest'
+            // Ejecutamos los tests con cobertura
+            bat 'coverage run -m pytest'
 
-                    // Desactivamos el entorno virtual (Windows)
-                    bat 'venv\\Scripts\\deactivate.bat'
+            // Verificamos la cobertura
+            bat 'coverage report -m --fail-under=80'
 
-                    echo 'todos los test se han ejecutado correctamente'
-                }
-            }
+            // Desactivamos el entorno virtual (Windows)
+            bat 'venv\\Scripts\\deactivate.bat'
+
+            echo 'Todos los tests se han ejecutado correctamente con al menos un 80% de cobertura.'
         }
+    }
+}
+
 
         stage('Linting con flake8') {
             steps {

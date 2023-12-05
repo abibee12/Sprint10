@@ -6,6 +6,10 @@ pipeline {
             steps {
                 git branch: 'main', credentialsId: 'gitCredentials', url: 'https://github.com/abibee12/Sprint10.git'
                 echo 'se ha clonado el repositorio '
+
+                echo "CHANGE_BRANCH: ${env.CHANGE_BRANCH}"
+echo "Environment Variables: ${env}"
+
             }
         }
 

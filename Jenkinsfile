@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+parameters {
+        choice choices: ['main', 'master', 'developer'], name: 'BRANCH'
+    }
+
        triggers {
                     pollSCM('H/5 * * * *')
                 }
@@ -71,6 +75,9 @@ pipeline {
 
 stage('Subida a Registry') {
        //aqui tiene que ir un condicional
+        when {
+                expression { params.BRANCH == 'main' }
+            }
     steps {
         script {
             // Autenticación con Docker Hub

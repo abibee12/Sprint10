@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-         triggers {
-              cron 'H/59 * * * *'
-            }
+       triggers {
+                    pollSCM('H/5 * * * *')
+                }
 
     stages {
         stage('Clonado de codigo fuente') {

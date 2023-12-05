@@ -70,7 +70,7 @@ pipeline {
                     def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true)
                     echo "Git Branch: ${gitBranch}"
 
-                    return gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))
+                    return gitBranch != null && (gitBranch.toString().endsWith('develop') || gitBranch.toString().endsWith('master') || gitBranch.toString().endsWith('main'))
                 }
             }
             steps {

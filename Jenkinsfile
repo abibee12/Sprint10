@@ -94,5 +94,3 @@ stage('Subida a Registry') {
 
 
                 }
-            }
-            }

@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-parameters {
-        choice choices: ['main', 'master', 'developer'], name: 'BRANCH'
-    }
+// parameters {
+//         choice choices: ['main', 'master', 'developer'], name: 'BRANCH'
+//     }
 
        triggers {
                     pollSCM('H/5 * * * *')
@@ -75,9 +75,9 @@ parameters {
 
 stage('Subida a Registry') {
        //aqui tiene que ir un condicional
-        when {
-                expression { params.BRANCH == 'main' }
-            }
+//         when {
+//                 expression { params.BRANCH == 'main' }
+//             }
     steps {
         script {
             // Autenticación con Docker Hub
@@ -93,19 +93,7 @@ stage('Subida a Registry') {
     }
 }
 
- stages {
-        stage('Conditional Stage') {
-            when {
-                expression { BRANCH_NAME == 'origin/' + params.BRANCH }
-            }
-            steps {
-                script {
-                    echo "Este stage se ejecutará solo si la rama es 'origin/${params.BRANCH}'."
-                    echo "La rama actual es: ${BRANCH_NAME}"
-                }
-            }
-        }
-    }
+
 
 
 

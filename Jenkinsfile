@@ -68,7 +68,7 @@ pipeline {
     when {
         expression {
             // Obtén la rama actual de Git de manera más robusta
-            def gitBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+            def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
             echo "Git Branch: ${gitBranch}"
 
             return gitBranch in ['develop', 'master', 'main']

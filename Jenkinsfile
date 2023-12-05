@@ -71,8 +71,8 @@ stage('Subida a Registry') {
             withCredentials([
                 usernamePassword(
                     credentialsId: 'dockerup',
-                    usernameVariable: 'DOCKERHUB_USERNAME',
-                    passwordVariable: 'DOCKERHUB_PASSWORD'
+                    usernameVariable: 'dockeruser',
+                    passwordVariable: 'dockerpass'
                 )
             ]) {
                 // Ahora puedes usar las variables de entorno sin exponerlas directamente

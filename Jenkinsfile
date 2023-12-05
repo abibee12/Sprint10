@@ -64,28 +64,27 @@ pipeline {
             }
         }
 
-   stage('Subida a Registry') {
-    when {
-        expression {
-            // Obtén la rama actual de Git de manera más robusta
-            def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
-            echo "Git Branch: ${gitBranch}"
-
-            return gitBranch in ['develop', 'master', 'main']
-        }
+stage('Subida a Registry') {
+    environment {
+        DOCKERHUB_USERNAME = credentials('dockeruser')
+        DOCKERHUB_PASSWORD = credentials('dockerpass')
     }
+
     steps {
         script {
-            // Autenticación con Docker Hub (sustituye con tu configuración específica)
-            bat 'docker login -u abigailmtz8 -p Abigailmtz_'
+            // Autenticación con Docker Hub
+            withCredentials([usernamePassword(credentialsId: 'nombre-credencial-dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                bat "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
 
-            // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
-            bat 'docker push abigailmtz8/appflask:latest'
+                // Sube la imagen al registry
+                bat 'docker push abigailmtz8/appflask:latest'
 
-            echo "Imagen subida exitosamente a Docker Hub"
+                echo "Imagen subida exitosamente a Docker Hub"
+            }
         }
     }
 }
+
 
     }
 }

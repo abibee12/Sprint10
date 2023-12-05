@@ -67,7 +67,7 @@ pipeline {
         stage('Subida a Registry') {
             when {
                 expression {
-                    def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
+                    def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true)
                     echo "Git Branch: ${gitBranch}"
 
                     return gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))

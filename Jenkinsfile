@@ -7,8 +7,8 @@ pipeline {
                 git branch: 'main', credentialsId: 'gitCredentials', url: 'https://github.com/abibee12/Sprint10.git'
                 echo 'se ha clonado el repositorio '
 
-                echo "CHANGE_BRANCH: ${branch}"
-echo "Environment Variables: ${env}"
+   def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
+            echo "Git Branch: ${gitBranch}"
 
             }
         }

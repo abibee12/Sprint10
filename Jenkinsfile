@@ -65,10 +65,13 @@ pipeline {
         }
 
         stage('Subida a Registry') {
-           when {
+
+ when {
     expression {
-        // Ejecutar solo si la rama es develop, master o main
-        return env.BRANCH_NAME != null && (env.BRANCH_NAME.endsWith('develop') || env.BRANCH_NAME.endsWith('master') || env.BRANCH_NAME.endsWith('main'))
+        def branchName = env.BRANCH_NAME != null ? env.BRANCH_NAME.replaceAll('^origin/', '') : null
+        echo "Branch Name: ${branchName}"
+
+        return branchName != null && (branchName.endsWith('develop') || branchName.endsWith('master') || branchName.endsWith('main'))
     }
 }
 

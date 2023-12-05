@@ -65,18 +65,25 @@ pipeline {
         }
 
         stage('Subida a Registry') {
-            steps {
-                script {
-                    // Autenticación con Docker Hub (sustituye con tu configuración específica)
-                    bat 'docker login -u abigailmtz8 -p Abigailmtz_'
-
-                    // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
-                     bat 'docker push abigailmtz8/appflask:latest'
-
-                    echo "Imagen subida exitosamente a Docker Hub"
-                }
-            }
+    when {
+        expression {
+            // Ejecutar solo si la rama es develop, master o main
+            return env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'main'
         }
+    }
+    steps {
+        script {
+            // Autenticación con Docker Hub (sustituye con tu configuración específica)
+            bat 'docker login -u abigailmtz8 -p Abigailmtz_'
+
+            // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
+            bat 'docker push abigailmtz8/appflask:latest'
+
+            echo "Imagen subida exitosamente a Docker Hub"
+        }
+    }
+}
+
 
 
 

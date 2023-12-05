@@ -93,11 +93,20 @@ stage('Subida a Registry') {
     }
 }
 
-stage('Print Branch Name') {
-        steps {
-            echo "La rama actual es: ${BRANCH_NAME}"
+ stages {
+        stage('Conditional Stage') {
+            when {
+                expression { BRANCH_NAME == 'origin/' + params.BRANCH }
+            }
+            steps {
+                script {
+                    echo "Este stage se ejecutará solo si la rama es 'origin/${params.BRANCH}'."
+                    echo "La rama actual es: ${BRANCH_NAME}"
+                }
+            }
         }
     }
+
 
 
     }

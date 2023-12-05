@@ -71,15 +71,6 @@ pipeline {
 
 stage('Subida a Registry') {
        //aqui tiene que ir un condicional
-    when {
-  expression {
-    branch 'refs/remotes/origin/main' || branch 'refs/remotes/origin/developer' || branch 'refs/remotes/origin/master'
-  }
-}
-
-
-
-
     steps {
         script {
             // Autenticación con Docker Hub

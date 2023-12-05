@@ -65,12 +65,13 @@ pipeline {
         }
 
         stage('Subida a Registry') {
-            when {
-                expression {
-                    // Ejecutar solo si la rama es develop, master o main
-                    return env.BRANCH_NAME.endsWith('develop') || env.BRANCH_NAME.endsWith('master') || env.BRANCH_NAME.endsWith('main')
-                }
-            }
+           when {
+    expression {
+        // Ejecutar solo si la rama es develop, master o main
+        return env.BRANCH_NAME != null && (env.BRANCH_NAME.endsWith('develop') || env.BRANCH_NAME.endsWith('master') || env.BRANCH_NAME.endsWith('main'))
+    }
+}
+
 
     steps {
         script {

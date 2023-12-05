@@ -70,7 +70,7 @@ pipeline {
         }
 
 stage('Subida a Registry') {
-
+       //aqui tiene que ir un condicional
 
     steps {
         script {

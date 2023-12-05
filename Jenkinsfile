@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+     triggers {
+        cron('H/1 * * * *') // Ejecutar cada 1 minuto
+    }
+
     stages {
         stage('Clonado de codigo fuente') {
             steps {

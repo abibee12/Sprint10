@@ -64,32 +64,25 @@ pipeline {
             }
         }
 
-       stage('Subida a Registry') {
-    steps {
-        script {
-            // Obtén la rama de Git
-            def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
+   stage('Subida a Registry') {
+    when {
+        expression {
+            // Obtén la rama actual de Git de manera más robusta
+            def gitBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
             echo "Git Branch: ${gitBranch}"
 
-            // Depura la información para asegurarnos de que se evalúe correctamente
-            echo "DEBUG: Evaluando la condición 'when'"
-            echo "DEBUG: gitBranch != null: ${gitBranch != null}"
-            echo "DEBUG: gitBranch.endsWith('develop'): ${gitBranch.endsWith('develop')}"
-            echo "DEBUG: gitBranch.endsWith('master'): ${gitBranch.endsWith('master')}"
-            echo "DEBUG: gitBranch.endsWith('main'): ${gitBranch.endsWith('main')}"
+            return gitBranch in ['develop', 'master', 'main']
+        }
+    }
+    steps {
+        script {
+            // Autenticación con Docker Hub (sustituye con tu configuración específica)
+            bat 'docker login -u abigailmtz8 -p Abigailmtz_'
 
-            // Evalúa la condición
-            if (gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))) {
-                // Autenticación con Docker Hub (sustituye con tu configuración específica)
-                bat 'docker login -u abigailmtz8 -p Abigailmtz_'
+            // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
+            bat 'docker push abigailmtz8/appflask:latest'
 
-                // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
-                bat 'docker push abigailmtz8/appflask:latest'
-
-                echo "Imagen subida exitosamente a Docker Hub"
-            } else {
-                echo "La condición 'when' no se cumplió, por lo que la etapa se omitió."
-            }
+            echo "Imagen subida exitosamente a Docker Hub"
         }
     }
 }

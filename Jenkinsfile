@@ -7,11 +7,7 @@ pipeline {
                 git branch: 'main', credentialsId: 'gitCredentials', url: 'https://github.com/abibee12/Sprint10.git'
                 echo 'se ha clonado el repositorio '
 
-   def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
-            echo "Git Branch: ${gitBranch}"
 
-            }
-        }
 
         stage('Ejecucion de los test') {
             steps {
@@ -68,17 +64,15 @@ pipeline {
             }
         }
 
-        stage('Subida a Registry') {
-when {
-    expression {
-        def gitBuildData = bat(script: 'git rev-parse --symbolic-full-name --abbrev-ref HEAD', returnStatus: true).trim()
-        echo "Git Build Data: ${gitBuildData}"
+stage('Subida a Registry') {
+    when {
+        expression {
+            def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
+            echo "Git Branch: ${gitBranch}"
 
-        return gitBuildData != null && (gitBuildData.endsWith('develop') || gitBuildData.endsWith('master') || gitBuildData.endsWith('main'))
+            return gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))
+        }
     }
-}
-
-
     steps {
         script {
             // Autenticación con Docker Hub (sustituye con tu configuración específica)

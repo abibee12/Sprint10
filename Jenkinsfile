@@ -64,26 +64,35 @@ pipeline {
             }
         }
 
-        stage('Subida a Registry') {
-            when {
-                expression {
-                    def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true)
-                    echo "Git Branch: ${gitBranch}"
+       stage('Subida a Registry') {
+    steps {
+        script {
+            // Obtén la rama de Git
+            def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
+            echo "Git Branch: ${gitBranch}"
 
-                    return gitBranch != null && (gitBranch.toString().endsWith('develop') || gitBranch.toString().endsWith('master') || gitBranch.toString().endsWith('main'))
-                }
-            }
-            steps {
-                script {
-                    // Autenticación con Docker Hub (sustituye con tu configuración específica)
-                    bat 'docker login -u abigailmtz8 -p Abigailmtz_'
+            // Depura la información para asegurarnos de que se evalúe correctamente
+            echo "DEBUG: Evaluando la condición 'when'"
+            echo "DEBUG: gitBranch != null: ${gitBranch != null}"
+            echo "DEBUG: gitBranch.endsWith('develop'): ${gitBranch.endsWith('develop')}"
+            echo "DEBUG: gitBranch.endsWith('master'): ${gitBranch.endsWith('master')}"
+            echo "DEBUG: gitBranch.endsWith('main'): ${gitBranch.endsWith('main')}"
 
-                    // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
-                    bat 'docker push abigailmtz8/appflask:latest'
+            // Evalúa la condición
+            if (gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))) {
+                // Autenticación con Docker Hub (sustituye con tu configuración específica)
+                bat 'docker login -u abigailmtz8 -p Abigailmtz_'
 
-                    echo "Imagen subida exitosamente a Docker Hub"
-                }
+                // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
+                bat 'docker push abigailmtz8/appflask:latest'
+
+                echo "Imagen subida exitosamente a Docker Hub"
+            } else {
+                echo "La condición 'when' no se cumplió, por lo que la etapa se omitió."
             }
         }
+    }
+}
+
     }
 }

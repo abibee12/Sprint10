@@ -6,8 +6,8 @@ pipeline {
             steps {
                 git branch: 'main', credentialsId: 'gitCredentials', url: 'https://github.com/abibee12/Sprint10.git'
                 echo 'se ha clonado el repositorio '
-
-
+            }
+        }
 
         stage('Ejecucion de los test') {
             steps {
@@ -64,33 +64,26 @@ pipeline {
             }
         }
 
-stage('Subida a Registry') {
-    when {
-        expression {
-            def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
-            echo "Git Branch: ${gitBranch}"
+        stage('Subida a Registry') {
+            when {
+                expression {
+                    def gitBranch = bat(script: 'git rev-parse --abbrev-ref HEAD', returnStatus: true).trim()
+                    echo "Git Branch: ${gitBranch}"
 
-            return gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))
-        }
-    }
-    steps {
-        script {
-            // Autenticación con Docker Hub (sustituye con tu configuración específica)
-            bat 'docker login -u abigailmtz8 -p Abigailmtz_'
+                    return gitBranch != null && (gitBranch.endsWith('develop') || gitBranch.endsWith('master') || gitBranch.endsWith('main'))
+                }
+            }
+            steps {
+                script {
+                    // Autenticación con Docker Hub (sustituye con tu configuración específica)
+                    bat 'docker login -u abigailmtz8 -p Abigailmtz_'
 
-            // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
-            bat 'docker push abigailmtz8/appflask:latest'
+                    // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
+                    bat 'docker push abigailmtz8/appflask:latest'
 
-            echo "Imagen subida exitosamente a Docker Hub"
+                    echo "Imagen subida exitosamente a Docker Hub"
+                }
+            }
         }
     }
 }
-
-
-
-
-
-
-
-
-                }

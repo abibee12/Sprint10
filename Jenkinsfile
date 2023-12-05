@@ -76,7 +76,7 @@ stage('Subida a Registry') {
                 )
             ]) {
                 // Ahora puedes usar las variables de entorno sin exponerlas directamente
-                bat 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
+                bat 'docker login -u dockeruser -p dockerpass'
                 bat 'docker push abigailmtz8/appflask:latest'
                 echo "Imagen subida exitosamente a Docker Hub"
             }

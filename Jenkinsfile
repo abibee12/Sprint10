@@ -69,13 +69,12 @@ echo "Environment Variables: ${env}"
         }
 
         stage('Subida a Registry') {
-
- when {
+when {
     expression {
-        def branchName = env.BRANCH_NAME != null ? env.BRANCH_NAME.replaceAll('^origin/', '') : null
-        echo "Branch Name: ${branchName}"
+        def gitBuildData = bat(script: 'git rev-parse --symbolic-full-name --abbrev-ref HEAD', returnStatus: true).trim()
+        echo "Git Build Data: ${gitBuildData}"
 
-        return branchName != null && (branchName.endsWith('develop') || branchName.endsWith('master') || branchName.endsWith('main'))
+        return gitBuildData != null && (gitBuildData.endsWith('develop') || gitBuildData.endsWith('master') || gitBuildData.endsWith('main'))
     }
 }
 

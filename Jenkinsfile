@@ -93,6 +93,12 @@ stage('Subida a Registry') {
     }
 }
 
+stage('Print Branch Name') {
+        steps {
+            echo "La rama actual es: ${BRANCH_NAME}"
+        }
+    }
+
 
     }
 }

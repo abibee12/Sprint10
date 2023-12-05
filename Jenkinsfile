@@ -74,8 +74,7 @@ stage('Subida a Registry') {
         script {
             // Autenticación con Docker Hub
             withCredentials([usernamePassword(credentialsId: 'dockerup', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                // Usar --password-stdin para mayor seguridad
-                bat "echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
+                bat "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
 
                 // Sube la imagen al registry
                 bat 'docker push abigailmtz8/appflask:latest'
@@ -85,7 +84,6 @@ stage('Subida a Registry') {
         }
     }
 }
-
 
 
     }

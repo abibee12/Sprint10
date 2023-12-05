@@ -73,7 +73,7 @@ stage('Subida a Registry') {
     steps {
         script {
             // Autenticación con Docker Hub
-            withCredentials([usernamePassword(credentialsId: 'nombre-credencial-dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+            withCredentials([usernamePassword(credentialsId: 'dockerup', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                 bat "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
 
                 // Sube la imagen al registry

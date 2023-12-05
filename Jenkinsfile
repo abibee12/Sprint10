@@ -71,7 +71,7 @@ pipeline {
                     bat 'docker login -u abigailmtz8 -p Abigailmtz_'
 
                     // Sube la imagen al registry (sustituye <tu-repositorio-dockerhub>)
-                    bat 'docker push docker push abigailmtz8/appflask:latest'
+                     bat 'docker push abigailmtz8/appflask:latest'
 
                     echo "Imagen subida exitosamente a Docker Hub"
                 }

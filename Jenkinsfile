@@ -71,11 +71,12 @@ pipeline {
 
 stage('Subida a Registry') {
        //aqui tiene que ir un condicional
-     when {
-              branch 'refs/remotes/origin/main'
-              branch 'refs/remotes/origin/developer'
-              branch 'refs/remotes/origin/master'
-           }
+    when {
+  expression {
+    branch 'refs/remotes/origin/main' || branch 'refs/remotes/origin/developer' || branch 'refs/remotes/origin/master'
+  }
+}
+
 
 
 

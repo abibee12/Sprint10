@@ -4,6 +4,7 @@ pipeline {
 
        triggers {
                     pollSCM('H/5 * * * *')
+
                 }
 
     stages {
@@ -11,7 +12,7 @@ pipeline {
             steps {
                 git branch: 'main', credentialsId: 'gitCredentials', url: 'https://github.com/abibee12/Sprint10.git'
                 echo 'se ha clonado el repositorio '
-                echo 'nuevo cambio para sondear'
+                echo 'probando nuevo cambio para sondear'
             }
         }
 
@@ -97,3 +98,7 @@ stage('Subida a Registry') {
 
     }
 }
+
+
+
+

@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     // Construye la imagen Docker
-                    bat 'docker build -t appflask .'
+                    bat 'docker build -t abigailmtz8/appflask .'
 
                     echo "imagen creada exitosamente"
 
